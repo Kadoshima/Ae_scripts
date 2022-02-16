@@ -1,20 +1,16 @@
-﻿var fileobj=File.openDialog("open", ["text:*.txt"]);
+﻿main();
 
-if(fileobj.open("r")){
-    var text = fileobj.read();
-    fileobj.close();
-
-    var atext = ['null'];
-    
-    var count = 1;
-    for(var i = 0; i < text.length; i++){
-        if(text[i] == '\n' || text[i] =='\r' || text[i] =='\r\n'){
-            count++;
-            atext.push("");
-            }
-        else{
-            atext[count] += text[i];
-            }
+function main(){
+    var imp = new ImportOptions();
+    var fObj;
+    if((fObj= Folder.selectDialog('フォルダを選択'))== null){
+        alert("キャンセルされました");
+        return;
         }
-    return atext;
-    }
+
+    var fileList = fObj.getFiles("*.jpg","*.JPG","*.jpeg","*.png");
+    alert(fileList.length);
+    for(var i = 0; i < fileList.length; i++){
+        
+        }
+}
