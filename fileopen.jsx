@@ -4,6 +4,7 @@ function main(){
     var imp = new ImportOptions();
     var fObj;
     var img = ['null'];
+    var folder = app.project.items.addFolder("img");
         
     if((fObj= Folder.selectDialog('フォルダを選択'))== null){
         alert("キャンセルされました");
@@ -12,15 +13,10 @@ function main(){
 
     var fileList = fObj.getFiles("*.jpg","*.JPG","*.jpeg","*.png");
     
-    imp.file = new File(fileList[0]);
-    imp.importa = false;
-    var sece = app.project.importFile(imp);
-    
-    //alert(img[3].fileName);
-    
-    /*
-     for(var i = 1; i <= fileList.length; i++){
-            comp[i].layers.add(img[i]);
-         }
-         */
+    for (var i=0; i<fileList.length; i++){
+        imp.file = new File(fileList[i]);
+        imp.importa = false;
+        var imgpearent = app.project.importFile(imp);
+        imgpearent.parentFolder = folder;
+        }    
 }
