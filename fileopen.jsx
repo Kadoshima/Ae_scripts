@@ -1,9 +1,8 @@
 ﻿main();
 
-function main(){
+function imgfilemaker(){
     var imp = new ImportOptions();
     var fObj;
-    var img = ['null'];
     var folder = app.project.items.addFolder("img");
         
     if((fObj= Folder.selectDialog('フォルダを選択'))== null){

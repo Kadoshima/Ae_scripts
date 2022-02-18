@@ -1,6 +1,11 @@
-﻿
-/*
-    ファイルが存在するか調べるとともに
+﻿//フォルダからimgフォルダを読み込み
+
+imgfilemaker();
+insert();
+SizeControl ();
+textcontrol();
+
+/*  ファイルが存在するか調べるとともに
     引数の名前のファイルが何個目のアイテムであるかを返す関数*/
 function existFolderName(fName){
     
@@ -51,6 +56,8 @@ function insert(){
     var img;
     var Quantity;
     
+
+    
     //imgファイルがなかった場合のエラー処理
     if ((imgFolderNumber = existFolderName ("img")) == false){
         
@@ -71,7 +78,7 @@ function insert(){
      for(var i = 1; i <= imgpaht.numItems; i++){
             comp[i].layers.add(img[i]);
          }
-     
+     alert ("insert完了");
 }
 
 
@@ -139,11 +146,16 @@ function SizeControl(){
                 PhotoFilter.property("濃度").setValue(50);
                 }
          }
+    alert ("sizecontrol完了");
     }
 
 //fileをオープンし、テキストを分ける
 function textopen(){
-    var fileobj=File.openDialog("open", ["text:*.txt"]);
+    var fileobj = File.openDialog("open", ["text:*.txt"]);
+    
+    if(fileobj == null){
+        return;
+        }
 
     if(fileobj.open("r")){
         var text = fileobj.read();
@@ -165,6 +177,7 @@ function textopen(){
         }
     }
 
+
 //テキストのコントロール
 function textcontrol(){
     
@@ -174,7 +187,8 @@ function textcontrol(){
     
     //textファイルがなかった場合のエラー処理
     //imgFolderNumber = プロジェクトの何番目にtextFolderがあるか
-    if ((textFolderNumber = existFolderName ("text")) == false){
+    
+    if ((textFolderNumber = existFolderName("text")) == false){
         alert("「text」というファイルが見つかりません。");
         return ;
     }
@@ -186,17 +200,45 @@ function textcontrol(){
     for(var i = 1; i <= textpaht.numItems; i++){
         textcomp.push (textpaht.item(i));
     }
-
+    
     //textopen()を使いtextにテキスト入れる
     var text = [];
     text = textopen();
     
+    //キャンセルされた場合
+    if(text == null){
+        alert("キャンセル");
+        return ;
+        }
+    
     //テキストレイヤーの内容を変える
-    for(var i=1; i < text.numItems; i++){
+    for(var i=1; i < text.length; i++){
         textcomp[i].layer(1).property("ADBE Text Properties")
         .property("ADBE Text Document").setValue(text[i]);
     }
 }
 
 
+//imgファイルを作成する
+function imgfilemaker(){
+    var imp = new ImportOptions();
+    var fObj;
+    var folder = app.project.items.addFolder("img");
+        
+    if((fObj= Folder.selectDialog('フォルダを選択'))== null){
+        alert("キャンセルされました");
+        return 0;
+        }
 
+    var fileList = fObj.getFiles("*.jpg","*.JPG","*.jpeg","*.png");
+    
+    for (var i=0; i<fileList.length; i++){
+        imp.file = new File(fileList[i]);
+        imp.importa = false;
+        var imgpearent = app.project.importFile(imp);
+        imgpearent.parentFolder = folder;
+        }    
+}
+
+
+//画像をリセットする
