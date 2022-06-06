@@ -1,10 +1,3 @@
-﻿//フォルダからimgフォルダを読み込み
-
-imgfilemaker();
-insert();
-SizeControl ();
-textcontrol();
-
 /*  ファイルが存在するか調べるとともに
     引数の名前のファイルが何個目のアイテムであるかを返す関数*/
 function existFolderName(fName){
