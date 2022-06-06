@@ -1,2 +1,4 @@
 # Ae_scripts
-#autoslidが全てです
+
+Adobe AfterEffectsで動くスクリプトです。
+メインの機能はautoslidに記述してあります。
